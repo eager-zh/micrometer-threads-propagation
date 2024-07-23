@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: testTracingRestClient
+#  threads:
+#    virtual:
+#      enabled: true
+server:
+  port: 8081
+logging:
+  level:
+    web: debug
+  pattern:
+    console: "%clr(%d){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%X{testRemoteBaggage}-%X{testLocalBaggage}]){magenta} %clr([%40.40t]){faint} %clr(${LOG_CORRELATION_PATTERN:-}){faint}%clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    baggage:
+      correlation:
+        fields: testRemoteBaggage, testLocalBaggage
+      remote-fields: testRemoteBaggage
+      local-fields: testLocalBaggage
